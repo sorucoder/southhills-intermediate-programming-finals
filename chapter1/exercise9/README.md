@@ -2,9 +2,9 @@
 
 ## Prompt
 
-Research current rates of monetary exchange. Draw a flowchart or write pseudo-
-code to represent the logic of a program that allows the user to enter a number of
-dollars and convert it to Euros and Japanese yen.
+Research current rates of monetary exchange. Write code to represent the logic of a
+program that allows the user to enter a number of dollars and convert it to
+Euros and Japanese yen.
 
 **Bonus:**
 
