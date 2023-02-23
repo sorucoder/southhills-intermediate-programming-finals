@@ -53,6 +53,7 @@ var salespersonIncomeSurvey []*survey.Question = []*survey.Question{
 		Name: "salary",
 		Prompt: &survey.Input{
 			Message: "Please enter your base salary:",
+			Help:    "You can enter an integer or decimal value, without the currency symbol.",
 		},
 		Validate:  survey.ComposeValidators(survey.Required, validateFloat),
 		Transform: transformFloat,
@@ -61,6 +62,7 @@ var salespersonIncomeSurvey []*survey.Question = []*survey.Question{
 		Name: "sales",
 		Prompt: &survey.Input{
 			Message: "Please enter your total sales:",
+			Help:    "You can enter an integer value.",
 		},
 		Validate:  survey.ComposeValidators(survey.Required, validateInteger),
 		Transform: transformInteger,
@@ -69,6 +71,7 @@ var salespersonIncomeSurvey []*survey.Question = []*survey.Question{
 		Name: "commission",
 		Prompt: &survey.Input{
 			Message: "Please enter your commission rate:",
+			Help:    "You can enter an integer or decimal value, without the currency symbol.",
 		},
 		Validate:  survey.ComposeValidators(survey.Required, validateFloat),
 		Transform: transformFloat,

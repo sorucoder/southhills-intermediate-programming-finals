@@ -85,6 +85,7 @@ var convertCurrencySurvey []*survey.Question = []*survey.Question{
 		Name: "fromCurrency",
 		Prompt: &survey.Input{
 			Message: "Please enter the currency you wish to convert from:",
+			Help:    "You can enter either an ISO 4217 currency code or a currency name, and use Tab for completions.",
 			Suggest: suggestCurrency,
 		},
 		Validate:  survey.ComposeValidators(survey.Required, validateCurrency),
@@ -94,6 +95,7 @@ var convertCurrencySurvey []*survey.Question = []*survey.Question{
 		Name: "toCurrency",
 		Prompt: &survey.Input{
 			Message: "Please enter the currency you wish to convert to:",
+			Help:    "You can enter either an ISO 4217 currency code or a currency name, and use Tab for completions.",
 			Suggest: suggestCurrency,
 		},
 		Validate:  survey.ComposeValidators(survey.Required, validateCurrency),
@@ -103,6 +105,7 @@ var convertCurrencySurvey []*survey.Question = []*survey.Question{
 		Name: "amount",
 		Prompt: &survey.Input{
 			Message: "Please enter the amount you wish to convert:",
+			Help:    "You can enter an integer or decimal value, without the currency symbol.",
 		},
 		Validate:  survey.ComposeValidators(survey.Required, validateAmount),
 		Transform: transformAmount,
