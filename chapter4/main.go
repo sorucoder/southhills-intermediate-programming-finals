@@ -123,7 +123,7 @@ func main() {
 						Help:    `You can enter the transaction amount, "next" for the next shift, or "done" to complete the record.`,
 					},
 					&answer,
-					survey.WithValidator(validateTransaction),
+					survey.WithValidator(survey.ComposeValidators(survey.Required, validateTransaction)),
 				); errAskTransaction != nil {
 					panic(errAskTransaction)
 				}
