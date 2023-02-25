@@ -54,6 +54,7 @@ func main() {
 				Help:    `You can enter the model name of this refrigerator; or leave it blank or enter "XXX" to finish`,
 			},
 			&modelAnswer,
+			survey.WithValidator(survey.Required),
 		); errAskRefrigeratorModel != nil {
 			panic(errAskRefrigeratorModel)
 		}
@@ -72,7 +73,7 @@ func main() {
 							Message: "Please enter the interior width of the refrigerator in cubic inches:",
 							Help:    "You can enter an integer or decimal value, without the unit.",
 						},
-						Validate:  validateFloat,
+						Validate:  survey.ComposeValidators(survey.Required, validateFloat),
 						Transform: transformFloat,
 					},
 					{
@@ -81,7 +82,7 @@ func main() {
 							Message: "Please enter the interior height of the refrigerator in cubic inches:",
 							Help:    "You can enter an integer or decimal value, without the unit.",
 						},
-						Validate:  validateFloat,
+						Validate:  survey.ComposeValidators(survey.Required, validateFloat),
 						Transform: transformFloat,
 					},
 					{
@@ -90,7 +91,7 @@ func main() {
 							Message: "Please enter the interior width of the refrigerator in cubic inches:",
 							Help:    "You can enter an integer or decimal value, without the unit.",
 						},
-						Validate:  validateFloat,
+						Validate:  survey.ComposeValidators(survey.Required, validateFloat),
 						Transform: transformFloat,
 					},
 				},
