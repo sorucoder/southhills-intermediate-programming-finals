@@ -54,7 +54,6 @@ func main() {
 				Help:    `You can enter the model name of this refrigerator; or leave it blank or enter "XXX" to finish`,
 			},
 			&modelAnswer,
-			survey.WithValidator(survey.Required),
 		); errAskRefrigeratorModel != nil {
 			panic(errAskRefrigeratorModel)
 		}
