@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"sort"
 	"strconv"
 
 	"github.com/AlecAivazis/survey/v2"
@@ -19,13 +20,35 @@ func validateAmount(answer any) error {
 	return errInvalidPrompt
 }
 
-func calculateBills(amount, denomination float64) (count int, remainder float64) {
-	count = int(amount / denomination)
-	remainder = amount - float64(count)*denomination
-	return
+var denominationAmounts []float64 = []float64{
+	100.00,
+	50.00,
+	20.00,
+	10.00,
+	5.00,
+	1.00,
+	0.25,
+	0.10,
+	0.05,
+	0.01,
 }
 
-var denominations map[float64]string = map[float64]string{
+var denominationAmountsSorter sort.Interface = sort.Reverse(sort.Float64Slice(denominationAmounts))
+
+var denominationSingularNames map[float64]string = map[float64]string{
+	100.00: "$100 Bill",
+	50.00:  "$50 Bill",
+	20.00:  "$20 Bill",
+	10.00:  "$10 Bill",
+	5.00:   "$5 Bill",
+	1.00:   "$1 Bill",
+	0.25:   "Quarter",
+	0.10:   "Dime",
+	0.05:   "Nickel",
+	0.01:   "Penny",
+}
+
+var denominationPluralNames map[float64]string = map[float64]string{
 	100.00: "$100 Bills",
 	50.00:  "$50 Bills",
 	20.00:  "$20 Bills",
@@ -38,6 +61,26 @@ var denominations map[float64]string = map[float64]string{
 	0.01:   "Pennies",
 }
 
+func calculateConsecutiveAmounts(amount float64) map[float64]int {
+	consecutiveAmounts := make(map[float64]int)
+
+	if !sort.IsSorted(denominationAmountsSorter) {
+		sort.Sort(denominationAmountsSorter)
+	}
+
+	for _, denominationAmount := range denominationAmounts {
+		count := int(amount / denominationAmount)
+		if count != 0 {
+			consecutiveAmounts[denominationAmount] = count
+			amount -= float64(count) * denominationAmount
+			if amount <= 0 {
+				break
+			}
+		}
+	}
+	return consecutiveAmounts
+}
+
 func main() {
 	var totalAmount float64
 	for {
@@ -45,7 +88,6 @@ func main() {
 		if errAskDollarAmount := survey.AskOne(
 			&survey.Input{
 				Message: "Please enter a dollar amount:",
-				Default: "0",
 				Help:    "Enter an amount in USD, without units or currency symbols. Enter 0 when finished.",
 			},
 			&amountAnswer,
@@ -65,16 +107,14 @@ func main() {
 	totalAmount = math.Round(totalAmount*100) / 100
 
 	fmt.Printf("$%.2f breaks down as follows:\n", totalAmount)
-	for denominationAmount, denominationName := range denominations {
-		var bills int
-		bills, totalAmount = calculateBills(totalAmount, denominationAmount)
-
-		if bills != 0 {
-			fmt.Printf("%d %s\n", bills, denominationName)
+	consecutiveAmounts := calculateConsecutiveAmounts(totalAmount)
+	for denominationValue, count := range consecutiveAmounts {
+		var denominationName string
+		if count == 1 {
+			denominationName = denominationSingularNames[denominationValue]
+		} else {
+			denominationName = denominationPluralNames[denominationValue]
 		}
-
-		if totalAmount <= 0 {
-			break
-		}
+		fmt.Printf("%d %s\n", count, denominationName)
 	}
 }
