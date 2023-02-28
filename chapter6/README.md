@@ -14,3 +14,4 @@ Daily Life Magazine wants an analysis of the demographic characteristics of its 
 Run the program:
 ```bash
 go run main.go
+```

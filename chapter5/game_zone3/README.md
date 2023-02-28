@@ -25,3 +25,4 @@ when the value is not 1
 Run the program:
 ```bash
 go run main.go
+```
