@@ -52,7 +52,7 @@ func main() {
 
 	var humanTotalScore, computerTotalScore int
 	var humanTurnScore, computerTurnScore int
-	turn := randomizer.Int() % 2
+	turn := randomizer.Intn(2)
 
 	for humanTotalScore+humanTurnScore < 100 && computerTotalScore+computerTurnScore < 100 {
 		if turn%2 == 0 {
@@ -72,8 +72,8 @@ func main() {
 
 			randomizer = rand.New(rand.NewSource(time.Now().UnixNano()))
 			if roll {
-				firstRoll := randomizer.Int()%6 + 1
-				secondRoll := randomizer.Int()%6 + 1
+				firstRoll := randomizer.Intn(6) + 1
+				secondRoll := randomizer.Intn(6) + 1
 				fmt.Printf("\033[32mYou rolled a %d and a %d.\033[0m\n", firstRoll, secondRoll)
 				if firstRoll == 1 || secondRoll == 1 {
 					if firstRoll == 1 && secondRoll == 1 {
@@ -93,11 +93,11 @@ func main() {
 		} else {
 			fmt.Println("\033[1m\033[31mTheir turn!\033[0m")
 
-			roll := randomizer.Int()%100 >= 50
+			roll := randomizer.Intn(100) >= 50
 
 			if roll {
-				firstRoll := randomizer.Int()%6 + 1
-				secondRoll := randomizer.Int()%6 + 1
+				firstRoll := randomizer.Intn(6) + 1
+				secondRoll := randomizer.Intn(6) + 1
 				fmt.Printf("\033[31mThey rolled a %d and a %d.\033[0m\n", firstRoll, secondRoll)
 				if firstRoll == 1 || secondRoll == 1 {
 					if firstRoll == 1 && secondRoll == 1 {
